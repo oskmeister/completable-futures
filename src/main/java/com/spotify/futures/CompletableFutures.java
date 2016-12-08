@@ -255,6 +255,118 @@ public final class CompletableFutures {
   }
 
   /**
+   * Combines multiple stages into a single stage.
+   *
+   * @param a        the first stage
+   * @param b        the second stage
+   * @param function the combining function
+   * @param <R>      the type of the combining function's return value
+   * @param <A>      the type of the first stage's value
+   * @param <B>      the type of the second stage's value
+   * @return a stage that combines the provided stages
+   * @since 0.1.0
+   */
+  public static <R, A, B> CompletionStage<R> combineCompose(
+      CompletionStage<A> a,
+      CompletionStage<B> b,
+      BiFunction<A, B, ? extends CompletionStage<R>> function) {
+    CompletableFuture<A> af = a.toCompletableFuture();
+    CompletableFuture<B> bf = b.toCompletableFuture();
+    return CompletableFuture.allOf(af, bf).thenCompose(
+        ignored -> function.apply(af.join(), bf.join()));
+  }
+
+  /**
+   * Combines multiple stages into a single stage.
+   *
+   * @param a        the first stage
+   * @param b        the second stage
+   * @param c        the third stage
+   * @param function the combining function
+   * @param <R>      the type of the combining function's return value
+   * @param <A>      the type of the first stage's value
+   * @param <B>      the type of the second stage's value
+   * @param <C>      the type of the third stage's value
+   * @return a stage that combines the provided stages
+   * @since 0.1.0
+   */
+  public static <R, A, B, C> CompletionStage<R> combineCompose(
+      CompletionStage<A> a,
+      CompletionStage<B> b,
+      CompletionStage<C> c,
+      Function3<A, B, C, ? extends CompletionStage<R>> function) {
+    CompletableFuture<A> af = a.toCompletableFuture();
+    CompletableFuture<B> bf = b.toCompletableFuture();
+    CompletableFuture<C> cf = c.toCompletableFuture();
+    return CompletableFuture.allOf(af, bf, cf).thenCompose(
+        ignored -> function.apply(af.join(), bf.join(), cf.join()));
+  }
+
+  /**
+   * Combines multiple stages into a single stage.
+   *
+   * @param a        the first stage
+   * @param b        the second stage
+   * @param c        the third stage
+   * @param d        the fourth stage
+   * @param function the combining function
+   * @param <R>      the type of the combining function's return value
+   * @param <A>      the type of the first stage's value
+   * @param <B>      the type of the second stage's value
+   * @param <C>      the type of the third stage's value
+   * @param <D>      the type of the fourth stage's value
+   * @return a stage that combines the provided stages
+   * @since 0.1.0
+   */
+  public static <R, A, B, C, D> CompletionStage<R> combineCompose(
+      CompletionStage<A> a,
+      CompletionStage<B> b,
+      CompletionStage<C> c,
+      CompletionStage<D> d,
+      Function4<A, B, C, D, ? extends CompletionStage<R>> function) {
+    CompletableFuture<A> af = a.toCompletableFuture();
+    CompletableFuture<B> bf = b.toCompletableFuture();
+    CompletableFuture<C> cf = c.toCompletableFuture();
+    CompletableFuture<D> df = d.toCompletableFuture();
+    return CompletableFuture.allOf(af, bf, cf, df).thenCompose(
+        ignored -> function.apply(af.join(), bf.join(), cf.join(), df.join()));
+  }
+
+  /**
+   * Combines multiple stages into a single stage.
+   *
+   * @param a        the first stage
+   * @param b        the second stage
+   * @param c        the third stage
+   * @param d        the fourth stage
+   * @param e        the fifth stage
+   * @param function the combining function
+   * @param <R>      the type of the combining function's return value
+   * @param <A>      the type of the first stage's value
+   * @param <B>      the type of the second stage's value
+   * @param <C>      the type of the third stage's value
+   * @param <D>      the type of the fourth stage's value
+   * @param <E>      the type of the fifth stage's value
+   * @return a stage that combines the provided stages
+   * @since 0.1.0
+   */
+  public static <R, A, B, C, D, E> CompletionStage<R> combineCompose(
+      CompletionStage<A> a,
+      CompletionStage<B> b,
+      CompletionStage<C> c,
+      CompletionStage<D> d,
+      CompletionStage<E> e,
+      Function5<A, B, C, D, E, ? extends CompletionStage<R>> function) {
+    CompletableFuture<A> af = a.toCompletableFuture();
+    CompletableFuture<B> bf = b.toCompletableFuture();
+    CompletableFuture<C> cf = c.toCompletableFuture();
+    CompletableFuture<D> df = d.toCompletableFuture();
+    CompletableFuture<E> ef = e.toCompletableFuture();
+    return CompletableFuture.allOf(af, bf, cf, df, ef).thenCompose(
+        ignored -> function.apply(af.join(), bf.join(), cf.join(), df.join(), ef.join()));
+  }
+
+  /**
    * Combines multiple stages by applying a function.
    *
    * @param a        the first stage.
